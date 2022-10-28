@@ -22,6 +22,9 @@ namespace AnimalShelter.Controllers
     {
       _db = db;
     }
+    ///<summary>
+    /// Get a specific animal.
+    /// </summary>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Animal>>> Get(string name, string species, string breed)
     {
@@ -41,6 +44,9 @@ namespace AnimalShelter.Controllers
       }
       return await query.ToListAsync();
     }
+    ///<summary>
+    /// Get a specific animal by Id.
+    /// </summary>
     [HttpGet("{id}")]
     public async Task<ActionResult<Animal>>GetAnimal(int id)
     {
@@ -52,16 +58,41 @@ namespace AnimalShelter.Controllers
       }
       return review;
     }
+    ///<summary>
+    /// Add a new animal.
+    /// </summary>
+    /// <param name="animal"></param>
+    /// <returns>A newly created Animal</returns>
+    /// <remarks>
+    /// Sample request:
+    ///
+    ///     POST /Animals
+    ///     {
+    ///        "name": "AnimalName",
+    ///        "species": "SpeciesName",
+    ///        "breed": "BreedName",
+    ///        "PostDate": "date",
+    ///     }
+    ///
+    /// </remarks>
+    /// <response code="201">Returns the newly created review</response>
+    /// <response code="400">If the review is null</response>
     [HttpPost]
     public async Task<ActionResult<Animal>> Post(Animal animal)
     {
+      DateTime date = DateTime.Now;
+      var longDateValue = date.ToLongDateString();
+      animal.PostDate = longDateValue;
       _db.Animals.Add(animal);
       await _db.SaveChangesAsync();
 
       return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId}, animal);
     }
+    ///<summary>
+    /// Update a specific animal.
+    /// </summary>
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Animal animal, string name)
+    public async Task<IActionResult> Put(int id, Animal animal)
     {
       if (id != animal.AnimalId)
       {
@@ -90,6 +121,9 @@ namespace AnimalShelter.Controllers
     {
       return _db.Animals.Any(e => e.AnimalId == id);
     }
+    ///<summary>
+    /// Deletes a specific animal.
+    /// </summary>
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAnimal(int id)
     {
