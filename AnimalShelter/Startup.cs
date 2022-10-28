@@ -4,9 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Mvc;
-// using ApiVersioningSampleApp.Controllers; //Using to access controllers
 using Microsoft.OpenApi.Models; //Using for Swagger OpenAPI
 using System; //Using for Uri
 using System.Reflection; //Using for XML comments with swagger
@@ -74,7 +71,7 @@ namespace AnimalShelter
                     {
                         Name = "Tiberius Lockett",
                         Email = string.Empty,
-                        Url = new Uri("https://github.com/Tiberiusloc/AnimalShelter.Solution")
+                        Url = new Uri("https://github.com/Tiberiusloc/AnimalShelterAPI.Solution")
                     },
                     License = new OpenApiLicense
                     {
