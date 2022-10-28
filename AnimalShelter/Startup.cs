@@ -37,7 +37,7 @@ namespace AnimalShelter
                 opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
             services.AddControllers();
 
-            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // For Jwt
+            // services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // For Jwt
 
             // within this section we are configuring the authentication and setting the default scheme
             services.AddAuthentication(options => {
@@ -99,7 +99,7 @@ namespace AnimalShelter
             
             app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Shanizas API V1");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Tiberius's API V1");
                     options.RoutePrefix = string.Empty;
                     options.InjectStylesheet("/Assets/css/custom-swagger-ui.css"); // Add CSS for homepage
                 }); // Documentation of the API's different routes
