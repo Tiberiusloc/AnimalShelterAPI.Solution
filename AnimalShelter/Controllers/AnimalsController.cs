@@ -41,5 +41,24 @@ namespace AnimalShelter.Controllers
       }
       return await query.ToListAsync();
     }
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Animal>>GetAnimal(int id)
+    {
+      var review = await _db.Animals.FindAsync(id);
+      
+      if (review == null)
+      {
+        return NotFound();
+      }
+      return review;
+    }
+    [HttpPost]
+    public async Task<ActionResult<Animal>> Post(Animal animal)
+    {
+      _db.Animals.Add(animal);
+      await _db.SaveChangesAsync();
+
+      return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId}, animal);
+    }
   }
 }
