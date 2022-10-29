@@ -1,16 +1,18 @@
 using System;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
+ //Using for XML comments with swagger
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using AnimalShelter.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AnimalShelter.Controllers
 {
+  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   [Route("api/[controller]")]
   [ApiController]
   [Produces("application/json")]
@@ -78,6 +80,8 @@ namespace AnimalShelter.Controllers
     /// <response code="201">Returns the newly created review</response>
     /// <response code="400">If the review is null</response>
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Animal>> Post(Animal animal)
     {
       DateTime date = DateTime.Now;

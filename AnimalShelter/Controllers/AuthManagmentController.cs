@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-[Route("api/[controller]")] // api/authmanagement
+[Route("api/[controller]")] 
 [ApiController]
 [Produces("application/json")]
 public class AuthManagementController : ControllerBase
