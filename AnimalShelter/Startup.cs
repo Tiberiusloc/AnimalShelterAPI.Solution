@@ -34,7 +34,7 @@ namespace AnimalShelter
                 opt.UseMySql(Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(Configuration["ConnectionStrings:DefaultConnection"])));
             services.AddControllers();
 
-            // services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // For Jwt
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig")); // For Jwt
 
             // within this section we are configuring the authentication and setting the default scheme
             services.AddAuthentication(options => {
@@ -65,7 +65,7 @@ namespace AnimalShelter
                 {
                     Version = "v1",
                     Title = "AnimalShelter API",
-                    Description = "An API containing reviews for travel destinations",
+                    Description = "An API containing animals for a shelter",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
@@ -79,8 +79,29 @@ namespace AnimalShelter
                         Url = new Uri("https://opensource.org/licenses/MIT")
                     }
                 });
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+                });
+                    options.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme {
+                            Reference = new OpenApiReference {
+                                Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                
             });
         }
 
